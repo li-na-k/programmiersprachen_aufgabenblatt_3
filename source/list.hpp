@@ -128,7 +128,7 @@ class List {
 
     // not fully implemented yet
     // TODO: do not forget about the initialiser list! (Aufgabe 3.2)
-    /* ... */
+    /* Default-Konstuktor */
     List() {}
 
     // test and implement:
@@ -164,7 +164,7 @@ class List {
       // make use of operator==
     }
 
-    /* ... */
+    /* Destruktor */
     ~List() {
       //TODO: Implement via clear-Method (Aufgabe 3.4)
     } //can not really be tested
@@ -183,7 +183,7 @@ class List {
       return {};
     }
 
-    /* ... */ 
+    /* Erases all elements from the */ 
     // test and implement:
     //TODO: clear()-Method (Aufgabe 3.4)
 
@@ -194,22 +194,21 @@ class List {
     /* ... */
     //TODO: member function insert (Aufgabe 3.13)
 
-    /* ... */
-
+    /* Reverses the order of the elements in the list */
     //TODO: member function reverse (Aufgabe 3.7 - Teil 1)
 
 
-    /* ... */
+    /* element added at the front of the list */
     void push_front(T const& element) {
       // TODO: push_front-method (Aufgabe 3.3)
     }
 
-    /* ... */
+    /* element added at the end of the list */
     void push_back(T const& element) {
       // TODO: push_back-method (Aufgabe 3.3)
     }
 
-    /* ... */
+    /* remove an element from the front of the list (without returning it) */
     void pop_front() {
       if(empty()) {
         throw "List is empty";
@@ -218,7 +217,7 @@ class List {
       // TODO: remainder of pop_front-method (Aufgabe 3.3)
     }
 
-    /* ... */
+    /* remove an element from the end of the list (without returning it) */
     void pop_back() {
       if(empty()) {
         throw "List is empty";
@@ -227,7 +226,7 @@ class List {
       // TODO: remainder of pop_back-method (Aufgabe 3.3)
     }
 
-    /* ... */
+    /* return first element of the list (and then delete it from the list) */
     T& front() {
       if(empty()) {
         throw "List is empty";
@@ -236,7 +235,7 @@ class List {
       // TODO: remainder of front-method (Aufgabe 3.3)
     }
 
-    /* ... */
+    /* return last element of the list (and then delete it from the list) */
     T& back() {
       if(empty()) {
         throw "List is empty";
@@ -245,7 +244,7 @@ class List {
       // TODO: remainder of back-method (Aufgabe 3.3)
     }
 
-    /* ... */
+    /* returns whether the list is empty */
     bool empty() const {
 
       // TODO: empty-method (Aufgabe 3.2)
@@ -253,8 +252,8 @@ class List {
     };
 
 
-    /* ... */
-    std::size_t size() const{
+    /* returns the size of the list */
+    std::size_t size() const{ //std::size_t is the unsigned integer type of the result of the sizeof operator
       // TODO: size-method (Aufgabe 3.2)      
       return 27;
   };
@@ -267,7 +266,7 @@ class List {
     ListNode<T>* last_;
 };
 
-/* ... */
+/* Reverses the order of the elements of a list */
 //TODO: Freie Funktion reverse 
 //(Aufgabe 3.7 - Teil 2, benutzt Member-Funktion reverse)
 
