@@ -129,7 +129,11 @@ class List {
     // not fully implemented yet
     // TODO: do not forget about the initialiser list! (Aufgabe 3.2)
     /* Default-Konstuktor */
-    List() {}
+    List():
+      size_ {0},
+      first_ {nullptr},
+      last_ {nullptr}
+     {}
 
     // test and implement:
     //TODO: Copy-Konstruktor using Deep-Copy semantics (Aufgabe 3.5)
@@ -246,17 +250,17 @@ class List {
 
     /* returns whether the list is empty */
     bool empty() const {
-
-      // TODO: empty-method (Aufgabe 3.2)
+      if(size() == 0){
+        return true;
+      }
       return false;
     };
 
 
     /* returns the size of the list */
-    std::size_t size() const{ //std::size_t is the unsigned integer type of the result of the sizeof operator
-      // TODO: size-method (Aufgabe 3.2)      
-      return 27;
-  };
+    std::size_t size() const{ //std::size_t is the unsigned integer type of the result of the sizeof operator    
+      return size_;
+    };
 
 
   // list members

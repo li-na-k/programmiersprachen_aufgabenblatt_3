@@ -18,7 +18,7 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 //test case definitions for default constructor of list as well as empty and size for empty list
 #include "sub_tests/default_constructed_list.test"
 
-//test case definitions for push methods of list
+/*test case definitions for push methods of list
 #include "sub_tests/push_front.test"
 #include "sub_tests/push_back.test"
 
@@ -41,7 +41,7 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 #include "sub_tests/iterators/operator_arrow.test"
 #include "sub_tests/iterators/operator_equals.test"
 #include "sub_tests/iterators/operator_does_not_equal.test"
-#include "sub_tests/iterators/operator_iterate_forward.test"
+#include "sub_tests/iterators/operator_iterate_forward.test"*/
 
 int main(int argc, char *argv[])
 {
