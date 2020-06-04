@@ -1,0 +1,36 @@
+TEST_CASE("clearing the list", "[clear]") {
+  List<int> list{};
+  list.push_front(9123);
+  list.push_back(25);
+  list.push_front(123);
+  REQUIRE(list.size() == 3);
+  list.clear();
+  REQUIRE(list.size() == 0);
+  REQUIRE(list.empty() == true);
+
+  List<int> list2{}; //when list is already empty
+  list2.clear();
+  REQUIRE(list2.empty() == true);
+
+  List<int> list3{}; //only 1 element
+  list3.push_front(9123);
+  list3.clear();
+  REQUIRE(list3.empty() == true);
+  
+  List<int> list4{}; 
+  list4.push_front(1);
+  list4.push_front(0);
+  list4.push_front(0);
+  list4.push_front(4);
+  list4.push_front(8);
+  list4.push_front(7);
+  list4.clear();
+  REQUIRE(list4.empty() == true);
+  
+  List<int> list5{}; 
+  list5.push_front(-1);
+  list5.push_front(-9999);
+  list5.push_front(2000);
+  list5.clear();
+  REQUIRE(list5.empty() == true);
+}
