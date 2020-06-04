@@ -127,7 +127,7 @@ class List {
     using iterator        = ListIterator<T>;
 
     // not fully implemented yet
-    // TODO: do not forget about the initialiser list! (Aufgabe 3.2)
+
     /* Default-Konstuktor */
     List():
       size_ {0},
@@ -170,8 +170,8 @@ class List {
 
     /* Destruktor */
     ~List() {
-      //TODO: Implement via clear-Method (Aufgabe 3.4)
-    } //can not really be tested
+      clear(); //QUESTION: wars das schon??
+    }
 
     /* ... */
     ListIterator<T> begin() {
@@ -204,12 +204,32 @@ class List {
 
     /* element added at the front of the list */
     void push_front(T const& element) {
-      // TODO: push_front-method (Aufgabe 3.3)
+      ListNode<T> *n = new ListNode<T> {element, nullptr, nullptr};
+      if(empty()){
+        first_ = n;
+        last_ = n;
+      }
+      else{
+        n->next = first_;
+        first_->prev = n;
+        first_=n;
+      }
+      ++size_;
     }
 
-    /* element added at the end of the list */
-    void push_back(T const& element) {
-      // TODO: push_back-method (Aufgabe 3.3)
+    /*element added at the end of the list */
+      void push_back(T const& element) {
+      ListNode<T> *n = new ListNode<T> {element, nullptr, nullptr};
+      if(empty()){
+        first_ = n;
+        last_ = n;
+      }
+      else{
+        n->prev = last_;
+        last_->next = n;
+        last_ = n;
+      }
+      ++size_;
     }
 
     /* remove an element from the front of the list (without returning it) */
@@ -217,8 +237,23 @@ class List {
       if(empty()) {
         throw "List is empty";
       }
-
-      // TODO: remainder of pop_front-method (Aufgabe 3.3)
+      else if(size()==1){
+        //assert(nullptr != first_);
+        //delete first_;
+        first_ = nullptr;
+        //assert(nullptr != last_);
+        //delete last_;
+			  last_ = nullptr;
+        size_--;
+      }
+      else{
+        first_->next->prev = nullptr;
+        /*assert(nullptr != first_);
+        delete first_;
+        first_ = nullptr;*/
+        first_ = first_->next;
+        size_--;
+      }
     }
 
     /* remove an element from the end of the list (without returning it) */
@@ -226,26 +261,43 @@ class List {
       if(empty()) {
         throw "List is empty";
       }
-
-      // TODO: remainder of pop_back-method (Aufgabe 3.3)
+      else if(size()==1){
+        //assert(nullptr != first_); //QUESTION: Wieso klappt das so nicht?
+        //delete first_;
+        last_ = nullptr;
+        //assert(nullptr != last_);
+        //delete last_;
+			  first_ = nullptr;
+        size_--;
+      }
+      else{
+        last_->prev->next = nullptr;
+        /*assert(nullptr != first_);
+        delete first_;
+        first_ = nullptr;*/
+        last_ = last_->prev;
+        size_--;
+      }
     }
 
-    /* return first element of the list (and then delete it from the list) */
-    T& front() {
+    /* Returns a reference to the first element in the container. */
+    T& front() { //QUESTION: wieso ist die Methode nicht const wenn sie doch nichts löscht / an der Liste verändert?
       if(empty()) {
         throw "List is empty";
       }
-
-      // TODO: remainder of front-method (Aufgabe 3.3)
+      else{
+        return first_->value;
+      }
     }
 
-    /* return last element of the list (and then delete it from the list) */
+    /* Returns a reference to the last element in the container. */
     T& back() {
       if(empty()) {
         throw "List is empty";
       }
-
-      // TODO: remainder of back-method (Aufgabe 3.3)
+      else{
+        return last_->value;
+      }
     }
 
     /* returns whether the list is empty */
@@ -261,6 +313,13 @@ class List {
     std::size_t size() const{ //std::size_t is the unsigned integer type of the result of the sizeof operator    
       return size_;
     };
+
+    /* deletes all elements in the list*/
+    void clear(){
+      while(empty() == false){
+        pop_front();
+      }
+    }
 
 
   // list members
