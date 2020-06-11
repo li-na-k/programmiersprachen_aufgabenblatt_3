@@ -135,10 +135,19 @@ class List {
       last_ {nullptr}
      {}
 
-    // test and implement:
-    //TODO: Copy-Konstruktor using Deep-Copy semantics (Aufgabe 3.5)
 
-
+    /*Deep-Copy-Konstruktor*/
+    List(List<T> const& c):
+      size_ {0},
+      first_ {nullptr},
+      last_ {nullptr}
+    { 
+        ListNode<T>* it = c.first_; 
+        for(int i = 0; i < c.size(); ++i){ 
+          push_back(it->value);
+          it = it->next;
+        }
+    }
 
     //TODO: Initializer-List Konstruktor (3.14 - Teil 1)
     /* ... */
@@ -170,9 +179,9 @@ class List {
 
     /* Destruktor */
     ~List() {
-      clear(); //QUESTION: wars das schon??
+      clear(); 
     }
-    
+
 
     /* ... */
     ListIterator<T> begin() {
@@ -235,54 +244,50 @@ class List {
 
     /* remove an element from the front of the list (without returning it) */
     void pop_front() {
+      ListNode<T>* it = first_;
       if(empty()) {
         throw "List is empty";
       }
       else if(size()==1){
-        //assert(nullptr != first_);
-        //delete first_;
         first_ = nullptr;
-        //assert(nullptr != last_);
-        //delete last_;
-			  last_ = nullptr;
-        size_--;
+        last_ = nullptr;
+        assert(nullptr != it);
+        delete it; 
+        --size_;
       }
       else{
-        first_->next->prev = nullptr;
-        /*assert(nullptr != first_);
-        delete first_;
-        first_ = nullptr;*/
         first_ = first_->next;
-        size_--;
+        first_->prev = nullptr;
+        assert(nullptr != it);
+        delete it;
+        --size_;
       }
     }
 
     /* remove an element from the end of the list (without returning it) */
     void pop_back() {
+      ListNode<T>* it = last_;
       if(empty()) {
         throw "List is empty";
       }
       else if(size()==1){
-        //assert(nullptr != first_); //QUESTION: Wieso klappt das so nicht?
-        //delete first_;
+        first_ = nullptr;
         last_ = nullptr;
-        //assert(nullptr != last_);
-        //delete last_;
-			  first_ = nullptr;
-        size_--;
+        assert(nullptr != it);
+        delete it;
+        --size_;
       }
       else{
-        last_->prev->next = nullptr;
-        /*assert(nullptr != first_);
-        delete first_;
-        first_ = nullptr;*/
-        last_ = last_->prev;
-        size_--;
+        last_= last_->prev;
+        last_->next = nullptr;
+        assert(nullptr != it);
+        delete it;
+        --size_;
       }
     }
 
     /* Returns a reference to the first element in the container. */
-    T& front() { //QUESTION: wieso ist die Methode nicht const wenn sie doch nichts löscht / an der Liste verändert?
+    T& front() {
       if(empty()) {
         throw "List is empty";
       }

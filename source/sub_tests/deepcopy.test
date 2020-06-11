@@ -1,0 +1,53 @@
+TEST_CASE("Deep-Copy constructor should copy the list properly", "[deep copy constructor]"){
+    List<int> list{};
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
+    List<int> list2{list};
+
+    REQUIRE(list2.front() == 1);
+    REQUIRE(list2.back() == 3);
+    REQUIRE(list2.size() == 3);
+
+    list.pop_back(); //urspruengliche Liste verändern und prüfen ob sich kopierte Liste nicht ändert
+    list.pop_front();
+
+    REQUIRE(list2.front() == 1);
+    REQUIRE(list2.back() == 3);
+    REQUIRE(list2.size() == 3);
+    REQUIRE(list.size() == 1); //urspruengliche Liste
+
+    //Test 2 - leere Liste
+    List<int> list3{};
+    List<int> list4{list3};
+    REQUIRE(list4.size() == 0);
+   
+
+    //neue und alte Liste veraendern - soll jeweils andere Liste nicht beeinflussen
+    list4.push_back(44);
+    list3.push_back(99);
+    REQUIRE(list4.front() == 44);
+    REQUIRE(list3.front() == 99);
+
+    //Test 3 - Liste mit einem Element
+    List<int> list5{};
+    list5.push_back(7);
+    List<int> list6{list5};
+    REQUIRE(list6.front() == 7);
+    REQUIRE(list6.back() == 7);
+    REQUIRE(list6.size() == 1);
+
+    //Test 4 - liste mit 5 Elementen
+    List<int> list7{};
+    list7.push_back(22);
+    list7.push_back(0);
+    list7.push_back(15);
+    list7.push_back(3);
+    list7.push_back(0);
+    List<int> list8{list7};
+    REQUIRE(list8.front() == 22);
+    REQUIRE(list8.back() == 0);
+    REQUIRE(list8.size() == 5);
+
+
+}
