@@ -222,8 +222,19 @@ class List {
     /* ... */
     //TODO: member function insert (Aufgabe 3.13)
 
-    /* Reverses the order of the elements in the list */
-    //TODO: member function reverse (Aufgabe 3.7 - Teil 1)
+    /* Reverses the order of the elements in the list (Aufgabe 3.7 - Teil 1) */
+    void reverse(){
+      ListNode<T>* it = first_; 
+      for(int i = 0; i < size(); ++i){ 
+        ListNode<T>* tempnext = it->next; 
+        it->next = it->prev;
+        it->prev = tempnext;
+        it = it->prev;
+      }
+      ListNode<T>* tempfirst = first_;
+      first_ = last_;
+      last_ = tempfirst;
+    }
 
 
     /* element added at the front of the list */
@@ -349,9 +360,14 @@ class List {
     ListNode<T>* last_;
 };
 
-/* Reverses the order of the elements of a list */
-//TODO: Freie Funktion reverse 
+/* Reverses the order of the elements of a list - ListNodeListe als Argument bekommt und eine neue Liste mit umgekehrter Reihenfolge zurückgibt */
 //(Aufgabe 3.7 - Teil 2, benutzt Member-Funktion reverse)
+template <typename T>
+List<T> reverse(List<T> rhs){
+  rhs.reverse();
+  List<T> reverselist = rhs;
+  return reverselist;
+}
 
 /* ... */
 //TODO: Freie Funktion operator+ (3.14 - Teil 2)
