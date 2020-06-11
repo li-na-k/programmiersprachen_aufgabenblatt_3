@@ -28,7 +28,8 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 #include "sub_tests/pop_back.test"
 
 
-//test case definitions for 
+//test case definitions for 3.6 (unifying assignment operator)
+#include "sub_tests/unifying_assignment_operator.test"
 
 //test cases for element access of list
 #include "sub_tests/front.test"

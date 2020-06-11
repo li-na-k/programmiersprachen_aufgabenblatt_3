@@ -1,0 +1,65 @@
+TEST_CASE("Should replace the contents with a copy of the contents of other", "[unifying assignment operator]"){
+    List<int> list{};
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
+    List<int> list2{};
+    list2.push_back(4);
+    list2.push_back(5);
+    list2.push_back(6);
+    list2 = list;
+
+    REQUIRE(list2.front() == 1);
+    REQUIRE(list2.back() == 3);
+    REQUIRE(list2.size() == 3);
+
+    //"Vorlage"-Liste bleibt gleich
+    REQUIRE(list.front() == 1);
+    REQUIRE(list.back() == 3);
+    REQUIRE(list.size() == 3);
+
+    list.pop_back(); //"Vorlage"-list verändern und prüfen, dass sich list2 nicht ändert
+    list.pop_front();
+
+    REQUIRE(list2.front() == 1);
+    REQUIRE(list2.back() == 3);
+    REQUIRE(list2.size() == 3);
+    REQUIRE(list.size() == 1); //urspruengliche Liste
+    
+    //Test 2 - leerer Liste etwas zuweisen
+    List<int> list3{};
+    list3.push_back(22);
+    list3.push_back(23);
+    list3.push_back(24);
+    List<int> list4{};
+    list4 = list3;
+    REQUIRE(list4.front() == 22);
+    REQUIRE(list4.back() == 24);
+    REQUIRE(list4.size() == 3);
+    
+    //Test 3 - Liste mit einem Element leerer Liste zuweisen
+    List<int> list5{};
+    list5.push_back(7);
+    List<int> list6{};
+    list6 = list5;
+    REQUIRE(list6.front() == 7);
+    REQUIRE(list6.back() == 7);
+    REQUIRE(list6.size() == 1);
+
+    //Test 4 - Liste mit 5 Elementen an Liste mit 3 Elementen zuweisen
+    List<int> list7{};
+    list7.push_back(22);
+    list7.push_back(0);
+    list7.push_back(15);
+    list7.push_back(3);
+    list7.push_back(0);
+    List<int> list8{};
+    list8.push_back(4);
+    list8.push_back(2);
+    list8.push_back(1);
+    list7 = list8;
+    REQUIRE(list7.front() == 4);
+    REQUIRE(list7.back() == 1);
+    REQUIRE(list7.size() == 3);
+
+}

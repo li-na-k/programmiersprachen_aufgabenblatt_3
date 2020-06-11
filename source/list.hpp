@@ -159,12 +159,26 @@ class List {
     // test and implement:
     //TODO: Copy-Konstruktor using Deep-Copy semantics (Aufgabe 3.5)
 
-    /* ... */
-    // test and implement:
-    //TODO: (unifying) Assignment operator (Aufgabe 3.6)
+    //(unifying) Assignment operator (Aufgabe 3.6)
+    /* Ersetzt den Inhalt der Liste mit einer Kopie der Inhalte der uebergebenen Liste. */
+    List<T>& operator=(List<T> rhs) { // per-value Uebergabe, copy constructor aufgerufen
+      swap(rhs);
+      return *this;
+    } //Destruktor fuer rhs-Kopie aufgerufen
 
-    /* ... */
-    // test and implement:
+    /* Tauscht die Inhalte der Liste mit der übergebenen, indem first und last Pointer zwischen den Listen vertauscht werden */
+    // needed for 3.6 unifying assignment operator
+    void swap(List<T>& rhs) { 
+      ListNode<T>* firsttemp = rhs.first_;
+      ListNode<T>* lasttemp = rhs.last_;
+      std::size_t sizetemp = rhs.size_;
+      rhs.first_ = first_;
+      rhs.last_ = last_;
+      rhs.size_ = size_;
+      first_ = firsttemp;
+      last_ = lasttemp;
+      size_ = sizetemp;
+    }
 
     bool operator==(List const& rhs)
     {
