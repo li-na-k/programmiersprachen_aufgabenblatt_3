@@ -44,6 +44,9 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 #include "sub_tests/reverse.test"
 #include "sub_tests/reverse_freie_funktion.test"
 
+//test case definitions for 3.8 (operator== and operator!=)
+#include "sub_tests/gleicheitsoperator.test"
+
 //test cases for retrieving iterators
 /*#include "sub_tests/begin.test"
 #include "sub_tests/end.test"

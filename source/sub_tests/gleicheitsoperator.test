@@ -1,0 +1,63 @@
+TEST_CASE("returns true if list is equal to rhs list", "[operator==]"){
+    List<int> list{};
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
+    List<int> list2{};
+    list2.push_back(4);
+    list2.push_back(5);
+    list2.push_back(6);
+
+    REQUIRE((list == list2) == false);
+
+    //Test 2
+    List<int> list3{};
+    list3.push_back(22);
+    list3.push_back(0);
+    list3.push_back(15);
+    list3.push_back(3);
+    list3.push_back(0);
+    List<int> list4{};
+    list4.push_back(22);
+    list4.push_back(0);
+    list4.push_back(15);
+    list4.push_back(3);
+    list4.push_back(0);
+    REQUIRE((list3 == list4) == true);
+
+    //Test 3
+    List<char> list5{};
+    list5.push_back('a');
+    list5.push_back('b');
+    list5.push_back('c');
+
+    List<char> list6{};
+    list6.push_back('a');
+    list6.push_back('b');
+    list6.push_back('c');
+    REQUIRE((list5 == list6) == true);
+
+    //Test 4
+    List<std::string> list7{};
+    list7.push_back("Hallo");
+    list7.push_back("Welt");
+
+    List<std::string> list8{};
+    list8.push_back("Hallo");
+    list8.push_back("Welt");
+
+    REQUIRE((list5 == list6) == true);
+
+
+    //Test 5
+    List<std::string> list9{};
+    list9.push_back("Hallo");
+    list9.push_back("Welt");
+
+    List<std::string> list10{};
+    list10.push_back("Hello");
+    list10.push_back("World");
+
+    REQUIRE((list9 == list10) == false);
+
+}

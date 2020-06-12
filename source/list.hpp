@@ -180,9 +180,24 @@ class List {
       size_ = sizetemp;
     }
 
+    /* operator== (Aufgabe 3.8)
+    Checks if the contents of lhs and rhs are equal
+    (if they have the same number of elements and each element in lhs compares equal with the element in rhs at the same position.*/
     bool operator==(List const& rhs)
     {
-      //TODO: operator== (Aufgabe 3.8)
+      if(size_ != rhs.size_){
+        return false;
+      }
+      ListNode<T>* it = first_; 
+      ListNode<T>* rhsit = rhs.first_; 
+      for(int i = 0; i < size(); ++i){ 
+        if(it->value != rhsit->value){
+          return false;
+        }
+        it = it->next;
+        rhsit = rhsit -> next;
+      }
+      return true;
     }
 
     bool operator!=(List const& rhs)
