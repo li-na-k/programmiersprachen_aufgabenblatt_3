@@ -1,0 +1,44 @@
+TEST_CASE("move constructor", "[constructor]") {
+    List<int> list; 
+    list.push_front(1); 
+    list.push_front(2); 
+    list.push_front(3); 
+    list.push_front(4);
+    List<int> list2 = std::move(list);
+    REQUIRE(0 == list.size()); 
+    REQUIRE(list.empty());
+    REQUIRE(4 == list2.size()); 
+    REQUIRE(4 == list2.front()); 
+    REQUIRE(1 == list2.back()); 
+
+    List<int> list3; 
+    list3.push_front(99); 
+    List<int> list4 = std::move(list3); 
+    REQUIRE(0 == list3.size()); 
+    REQUIRE(list3.empty());
+    REQUIRE(1 == list4.size()); 
+    REQUIRE(99 == list4.front()); 
+    REQUIRE(99 == list4.back()); 
+
+    //with empty list as rhs
+    List<int> list5; 
+    List<int> list6 = std::move(list5); 
+    REQUIRE(0 == list5.size()); 
+    REQUIRE(list5.empty());
+    REQUIRE(0 == list6.size()); 
+    REQUIRE(list6.empty());
+
+    List<int> list7; 
+    list7.push_front(14); 
+    list7.push_front(11); 
+    list7.push_front(87); 
+    list7.push_front(1); 
+    list7.push_front(0); 
+    list7.push_back(22); 
+    List<int> list8 = std::move(list7); 
+    REQUIRE(0 == list7.size()); 
+    REQUIRE(list7.empty());
+    REQUIRE(6 == list8.size()); 
+    REQUIRE(0 == list8.front()); 
+    REQUIRE(22 == list8.back()); 
+}

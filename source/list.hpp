@@ -149,6 +149,16 @@ class List {
         }
     }
 
+    // Move-Konstruktor (Aufgabe 3.9)
+    List(List<T>&& rhs):
+      size_(rhs.size_),
+      first_(rhs.first_), // Listenelemente von rhs uebernehmen
+      last_(rhs.last_) { 
+        rhs.size_ = 0;
+        rhs.first_ = nullptr; // rhs leeren
+        rhs.last_ = nullptr;
+      }
+
     //TODO: Initializer-List Konstruktor (3.14 - Teil 1)
     /* ... */
     // test and implement:

@@ -48,6 +48,8 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 #include "sub_tests/gleicheitsoperator.test"
 #include "sub_tests/ungleichheitsoperator.test"
 
+//test case definitions for 3.9 (move constructor)
+#include "sub_tests/move_constructor.test"
 
 //test cases for retrieving iterators
 /*#include "sub_tests/begin.test"
