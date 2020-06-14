@@ -46,6 +46,8 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 
 //test case definitions for 3.8 (operator== and operator!=)
 #include "sub_tests/gleicheitsoperator.test"
+#include "sub_tests/ungleichheitsoperator.test"
+
 
 //test cases for retrieving iterators
 /*#include "sub_tests/begin.test"
