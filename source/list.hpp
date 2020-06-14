@@ -183,8 +183,7 @@ class List {
     /* operator== (Aufgabe 3.8)
     Checks if the contents of lhs and rhs are equal
     (if they have the same number of elements and each element in lhs compares equal with the element in rhs at the same position.*/
-    bool operator==(List const& rhs)
-    {
+    bool operator==(List const& rhs) const {
       if(size_ != rhs.size_){
         return false;
       }
@@ -200,10 +199,14 @@ class List {
       return true;
     }
 
-    bool operator!=(List const& rhs)
-    {
-      //TODO: operator!= (Aufgabe 3.8)
-      // make use of operator==
+    /* operator!= (Aufgabe 3.8) */
+    bool operator!=(List const& rhs) const{
+      if (operator==(rhs)){
+        return false;
+      }
+      else{
+        return true;
+      }
     }
 
     /* Destruktor */
