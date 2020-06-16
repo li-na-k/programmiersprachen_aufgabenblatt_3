@@ -31,25 +31,27 @@ struct ListIterator {
 
 
   /* DESCRIPTION  operator*() */
+  //Derefenrenzierung
   T&  operator*()  const {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
     }
-
-    //TODO: remaining implementation of derefenciation of 
-    //      iterator using operator* (Aufgabe 3.11 - Teil 1)
-
-  } //call *it
+    else{
+      return node->value;
+    }
+  } 
 
   /* DESCRIPTION  operator->() */
   T* operator->() const {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
     }
-
-    //TODO: remaining implementation of derefenciation of 
-    //      iterator using operator-> (Aufgabe 3.11 - Teil 2)
-  }  //call it->method() or it->member
+    else{
+      return node->value;
+      //should return the pointer of the value type
+      // ListNode <T>* node = nullptr;
+    }
+  }  
 
 
   /* PREINCREMENT, call: ++it, advances one element forward */
@@ -135,20 +137,6 @@ class List {
       last_ {nullptr}
      {}
 
-
-    /*Deep-Copy-Konstruktor*/
-    List(List<T> const& c):
-      size_ {0},
-      first_ {nullptr},
-      last_ {nullptr}
-    { 
-        ListNode<T>* it = c.first_; 
-        for(int i = 0; i < c.size(); ++i){ 
-          push_back(it->value);
-          it = it->next;
-        }
-    }
-
     // Move-Konstruktor (Aufgabe 3.9)
     List(List<T>&& rhs):
       size_(rhs.size_),
@@ -166,8 +154,19 @@ class List {
       //not implemented yet
     }
 
-    // test and implement:
-    //TODO: Copy-Konstruktor using Deep-Copy semantics (Aufgabe 3.5)
+  
+    //Copy-Konstruktor using Deep-Copy semantics (Aufgabe 3.5)
+    List(List<T> const& c):
+      size_ {0},
+      first_ {nullptr},
+      last_ {nullptr}
+    { 
+        ListNode<T>* it = c.first_; 
+        for(int i = 0; i < c.size(); ++i){ 
+          push_back(it->value);
+          it = it->next;
+        }
+    }
 
     //(unifying) Assignment operator (Aufgabe 3.6)
     /* Ersetzt den Inhalt der Liste mit einer Kopie der Inhalte der uebergebenen Liste. */
@@ -224,19 +223,17 @@ class List {
       clear(); 
     }
 
-
+    //begin-Method returning an Iterator to the first element in the List (Aufgabe 3.10)
     /* ... */
     ListIterator<T> begin() {
-      //TODO: begin-Method returning an Iterator to the 
-      //      first element in the List (Aufgabe 3.10)
-      return {};
+      return ListIterator<T>{first_};
     }
 
     /* ... */
     ListIterator<T> end() {
       //TODO: end-Method returning an Iterator to element after (!) 
       //      the last element in the List (Aufgabe 3.10)
-      return {};
+      return ListIterator<T>{nullptr};
     }
 
     /* Erases all elements from the */ 
