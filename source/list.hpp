@@ -31,7 +31,7 @@ struct ListIterator {
 
 
   /* DESCRIPTION  operator*() */
-  //Derefenrenzierung
+  //Dereferenzierung
   T&  operator*()  const {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
@@ -50,7 +50,7 @@ struct ListIterator {
       return &(node->value);
       //should return the pointer of the value type
     }
-  }  //call it->method() or it->member
+  }
 
 
   /* PREINCREMENT, call: ++it, advances one element forward */
@@ -58,6 +58,10 @@ struct ListIterator {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
     }
+    else{
+      return *this->next;
+    }
+
 
     //TODO: Implement Postincrement-Operation for Iterator
     //      (Aufgabe 3.11 - Teil 3)
@@ -78,20 +82,25 @@ struct ListIterator {
 
 
   /* ... */
+  /*Equality-Operation for Iterator (Aufgabe 3.11 - Teil 5)
+  Iterators should be the same if they refer to the same node*/
   bool operator==(ListIterator<T> const& x) const {
-    //TODO: Implement Equality-Operation for Iterator
-    //      (Aufgabe 3.11 - Teil 5)
-    // Iterators should be the same if they refer to the same node
+    if(node == x.node){
+      return true;
+    }
     return false;
-  } // call it: == it
+  }
 
+  //Inequality-Operation for Iterator (Aufgabe 3.11 - Teil 6)
   /* ... */
   bool operator!=(ListIterator<T> const& x) const {
-    //TODO: Implement Inequality-Operation for Iterator  
-    //      (Aufgabe 3.11 - Teil 6)
-    // Reuse operator==
-    return false;
-  } // call it: != it
+    if(operator==(x)){
+      return false;
+    }
+    return true;
+  } 
+
+
 
   /* Advances Iterator */
   ListIterator<T> next() const {
