@@ -47,11 +47,10 @@ struct ListIterator {
       throw "Iterator does not point to valid node";
     }
     else{
-      return node->value;
+      return &(node->value);
       //should return the pointer of the value type
-      // ListNode <T>* node = nullptr;
     }
-  }  
+  }  //call it->method() or it->member
 
 
   /* PREINCREMENT, call: ++it, advances one element forward */
