@@ -59,25 +59,28 @@ struct ListIterator {
       throw "Iterator does not point to valid node";
     }
     else{
-      return *this->next;
+      node = node->next;
+      return *this;
     }
-
-
-    //TODO: Implement Postincrement-Operation for Iterator
-    //      (Aufgabe 3.11 - Teil 3)
-    
   }
+
 
   /* POSTINCREMENT (signature distinguishes the iterators), 
                     call:  it++, advances one element forward*/
+                    //returns original iterator!
   ListIterator<T> operator++(int) {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
     }
-
-    //TODO: Implement Postincrement-Operation for Iterator
-    //      (Aufgabe 3.11 - Teil 4)
-
+    else if(node->next == nullptr){ //reach the end iterator, i.e. the element past the end of the list
+      ListNode <T>* original = node;
+      node = nullptr;
+      return {original};
+    }
+    else{
+      node = node->next;
+      return {node->prev};
+    }
   }
 
 
@@ -244,13 +247,31 @@ class List {
       return ListIterator<T>{nullptr};
     }
 
-    /* Erases all elements from the */ 
-    // test and implement:
-    //TODO: clear()-Method (Aufgabe 3.4)
-
 
     /* ... */
     //TODO: member function insert (Aufgabe 3.12)
+    ListIterator<T> insert(ListIterator<T> const& pos, T const& element){
+      ListNode<T> *n = new ListNode<T> {element, nullptr, nullptr};
+      if(empty()){
+        push_front(element);
+      }
+      if(pos.node == first_){
+        push_front(element);
+      }
+      if(pos.node == last_){
+        push_back(element);
+      }
+      if(nullptr == pos.node) {
+        throw "Iterator does not point to valid node";
+      }
+      else{
+        n->next = pos.node;
+        pos.node->prev = n;
+        n->prev = pos.node->prev;
+        pos.node->prev->next = n;
+      }
+      ++size_;
+    }
 
     /* ... */
     //TODO: member function insert (Aufgabe 3.13)
