@@ -64,6 +64,17 @@ struct ListIterator {
     }
   }
 
+//decrement for convenience (used in erase())
+  ListIterator<T>& operator--() {
+    if(nullptr == node) {
+      throw "Iterator does not point to valid node";
+    }
+    else{
+      node = node->prev;
+      return *this;
+    }
+  }
+
 
   /* POSTINCREMENT (signature distinguishes the iterators), 
                     call:  it++, advances one element forward*/
@@ -251,30 +262,59 @@ class List {
     /* ... */
     //TODO: member function insert (Aufgabe 3.12)
     ListIterator<T> insert(ListIterator<T> const& pos, T const& element){
-      ListNode<T> *n = new ListNode<T> {element, nullptr, nullptr};
-      if(empty()){
-        push_front(element);
-      }
-      if(pos.node == first_){
-        push_front(element);
-      }
-      if(pos.node == last_){
-        push_back(element);
-      }
-      if(nullptr == pos.node) {
+      
+      if(pos.node == nullptr && pos != end()){ 
         throw "Iterator does not point to valid node";
       }
-      else{
-        n->next = pos.node;
-        pos.node->prev = n;
-        n->prev = pos.node->prev;
-        pos.node->prev->next = n;
+      else if(pos == begin()){
+        push_front(element);
+        return begin();
       }
-      ++size_;
+      if(pos == begin()){ 
+        push_front(element);
+        return begin();
+      }
+      else if(pos == end()){
+        push_back(element);
+        return end();
+      }
+      else{
+        ListNode<T> *n = new ListNode<T> {element, pos.node->prev, pos.node};
+        pos.node->prev->next = n;
+        pos.node->prev = n;
+        ++size_;
+        return ListIterator<T>{n};
+      }
     }
 
+
     /* ... */
-    //TODO: member function insert (Aufgabe 3.13)
+    //TODO: member function erase (Aufgabe 3.12)
+    ListIterator<T> erase(ListIterator<T> const& pos){
+      if(empty()){ 
+        throw "List is empty";
+      }
+      else if(pos == begin()){
+        pop_front();
+        return begin();
+      }
+      else if(pos == --end()){ 
+        pop_back();
+        return --end();
+      }
+      else{
+        auto temp = pos;
+        pos.node->prev->next = pos.node->next;
+        pos.node->next->prev = pos.node->prev;
+        assert(nullptr != pos.node);
+        delete pos.node;
+        --size_;
+        return ListIterator<T>{temp.node->prev};
+      }
+    }
+
+
+
 
     /* Reverses the order of the elements in the list (Aufgabe 3.7 - Teil 1) */
     void reverse(){

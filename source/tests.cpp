@@ -62,8 +62,10 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 #include "sub_tests/iterators/operator_does_not_equal.test"
 #include "sub_tests/iterators/operator_iterate_forward.test"
 
-//insert tests
-//#include "sub_tests/insert.test"
+//insert and erase tests
+#include "sub_tests/insert.test"
+#include "sub_tests/erase.test"
+
 
 int main(int argc, char *argv[])
 {
