@@ -270,10 +270,6 @@ class List {
         push_front(element);
         return begin();
       }
-      if(pos == begin()){ 
-        push_front(element);
-        return begin();
-      }
       else if(pos == end()){
         push_back(element);
         return end();
