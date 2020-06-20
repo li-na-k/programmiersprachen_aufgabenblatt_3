@@ -64,7 +64,8 @@ struct ListIterator {
     }
   }
 
-//decrement for convenience (used in erase())
+
+  //decrement (not needed)
   ListIterator<T>& operator--() {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
@@ -284,28 +285,40 @@ class List {
     }
 
 
-    /* ... */
-    //TODO: member function erase (Aufgabe 3.12)
+    /*  Removes the element at pos.
+
+    @param 	iterator to the element to remove 
+    (The iterator pos must be valid and dereferenceable. 
+    Thus the end() iterator (which is valid, but is not dereferencable) 
+    cannot be used as a value for pos.)
+
+    @return  Iterator following the removed element.
+    If pos refers to the last element, then the end() iterator is returned.*/
     ListIterator<T> erase(ListIterator<T> const& pos){
-      if(empty()){ 
+      if(empty()){  
         throw "List is empty";
       }
-      else if(pos == begin()){
+      if(pos.node == nullptr){
+        throw "Iterator to the element to remove is a nullpointer.";
+      }
+
+      else if(pos == begin()){ 
         pop_front();
         return begin();
       }
-      else if(pos == --end()){ 
+      else if (pos == ListIterator<T>{last_}){ //pos is the last element
         pop_back();
-        return --end();
+        return end();
       }
       else{
         auto temp = pos;
+        auto returnvalue = ++temp;
         pos.node->prev->next = pos.node->next;
         pos.node->next->prev = pos.node->prev;
         assert(nullptr != pos.node);
         delete pos.node;
         --size_;
-        return ListIterator<T>{temp.node->prev};
+        return ListIterator<T>{returnvalue};
       }
     }
 

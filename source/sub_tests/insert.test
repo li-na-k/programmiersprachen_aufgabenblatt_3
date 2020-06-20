@@ -1,0 +1,111 @@
+TEST_CASE("add elements with insert", "[list_insertion]") {
+  List<int> list{};
+  list.push_front(1);
+
+  // actual tests
+  // ------------
+  //inserting at front
+
+  ListIterator<int> it {get_first_pointer(list)};
+
+    //execute insert and test if returned value is right
+    auto returnedIterator = list.insert(it, 9); 
+    REQUIRE(returnedIterator == list.begin());
+  
+    // front to back list content should be: 9 1 
+    REQUIRE(9 == list.front()); 
+    REQUIRE(1 == list.back()); 
+    //size should be 2
+    REQUIRE(2 == list.size()); 
+    //check if links between nodes are set correctly
+    auto first_pointer = get_first_pointer(list);
+    auto last_pointer  = get_last_pointer(list); 
+    REQUIRE(first_pointer->prev == nullptr);
+    REQUIRE(first_pointer->next->value == 1);
+    REQUIRE(last_pointer->next == nullptr);
+    REQUIRE(last_pointer->prev->value == 9);
+    
+
+
+  // ------------
+  //inserting in middle
+  ListIterator<int> it2 {get_first_pointer(list)->next};
+
+  //execute insert and test if returned value is right
+    auto returnedIterator2 = list.insert(it2, 3);   
+    REQUIRE(returnedIterator2.node->value == 3);
+    REQUIRE(returnedIterator2.node->prev->value == it2.node->prev->prev->value); //it2 2 mal prev, da neues Element dann schon eingefuegt
+    REQUIRE(returnedIterator2.node->next->value == it2.node->value);
+
+  // front to back list content should be: 9 3 1 
+    REQUIRE(9 == list.front()); 
+    REQUIRE(1 == list.back()); 
+    //size should be 3
+    REQUIRE(3 == list.size()); 
+    //check if links between nodes are set correctly
+    first_pointer = get_first_pointer(list);
+    last_pointer  = get_last_pointer(list); 
+    REQUIRE(first_pointer->prev == nullptr);
+    REQUIRE(first_pointer->next->value == 3);
+    REQUIRE(first_pointer->next->next->value == 1);
+    REQUIRE(first_pointer->next->prev->value == 9);
+    REQUIRE(last_pointer->next == nullptr);
+    REQUIRE(last_pointer->prev->value == 3);
+
+  // ------------
+  //inserting last position
+  ListIterator<int> it3 {get_last_pointer(list)->next}; 
+
+  //execute insert and test if returned value is right
+  auto returnedIterator3 = list.insert(it3, 7); 
+  REQUIRE(returnedIterator3 == list.end());
+
+  // front to back list content should be: 9 3 1 7
+    REQUIRE(9 == list.front()); 
+    REQUIRE(7 == list.back()); 
+    //size should be 4
+    REQUIRE(4 == list.size()); 
+    //check if links between nodes are set correctly
+    first_pointer = get_first_pointer(list);
+    last_pointer  = get_last_pointer(list);
+    REQUIRE(first_pointer->prev == nullptr);
+    REQUIRE(first_pointer->next->value == 3);
+    REQUIRE(first_pointer->next->prev->value == 9);
+    REQUIRE(first_pointer->next->next->value == 1);
+    REQUIRE(first_pointer->next->next->prev->value == 3);
+    REQUIRE(first_pointer->next->next->next->prev->value == 1);
+    REQUIRE(last_pointer->next == nullptr);
+    REQUIRE(last_pointer->prev->value == 1);
+
+  // ------------
+  //inserting in middle (vorletzte Stelle)
+  ListIterator<int> it4 {get_last_pointer(list)}; 
+
+  //execute insert and test if returned value is right
+  auto returnedIterator4 = list.insert(it4, 8);   
+  REQUIRE(returnedIterator4.node->value == 8);
+  REQUIRE(returnedIterator4.node->prev->value == it4.node->prev->prev->value); //it4 2 mal prev, da neues Element dann schon eingefuegt
+  REQUIRE(returnedIterator4.node->next->value == it4.node->value);
+
+  // front to back list content should be: 9 3 1 8 7
+    REQUIRE(9 == list.front()); 
+    REQUIRE(7 == list.back()); 
+    //size should be 5
+    REQUIRE(5 == list.size()); 
+    //check if links between nodes are set correctly
+    first_pointer = get_first_pointer(list);
+    last_pointer  = get_last_pointer(list);
+    REQUIRE(first_pointer->prev == nullptr);
+    REQUIRE(first_pointer->next->value == 3);
+    REQUIRE(first_pointer->next->prev->value == 9);
+    REQUIRE(first_pointer->next->next->value == 1);
+    REQUIRE(first_pointer->next->next->prev->value == 3);
+    REQUIRE(first_pointer->next->next->next->prev->value == 1);
+    REQUIRE(last_pointer->next == nullptr);
+    REQUIRE(last_pointer->prev->value == 8);
+    REQUIRE(last_pointer->prev->prev->value == 1);
+    REQUIRE(last_pointer->prev->next->value == 7);
+}
+
+ 
+
