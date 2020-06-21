@@ -30,7 +30,7 @@ struct ListIterator {
   using iterator_category = std::bidirectional_iterator_tag;
 
 
-  /* DESCRIPTION  operator*() */
+  /* Dereferenzieren, um auf den Knoten zugreifen zu können, auf den der Iterator zeigt*/
   //Dereferenzierung
   T&  operator*()  const {
     if(nullptr == node) {
@@ -41,7 +41,7 @@ struct ListIterator {
     }
   } 
 
-  /* DESCRIPTION  operator->() */
+  /* Dereferenzieren, um auf den Knoten zugreifen zu können, auf den der Iterator zeigt (z.B. in einer Methode) */
   T* operator->() const {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
@@ -65,7 +65,7 @@ struct ListIterator {
   }
 
 
-  //decrement (not needed)
+  //decrement (not needed), decrements the iterator +/
   ListIterator<T>& operator--() {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
@@ -79,7 +79,7 @@ struct ListIterator {
 
   /* POSTINCREMENT (signature distinguishes the iterators), 
                     call:  it++, advances one element forward*/
-                    //returns original iterator!
+  //returns original iterator!
   ListIterator<T> operator++(int) {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
@@ -95,8 +95,6 @@ struct ListIterator {
     }
   }
 
-
-  /* ... */
   /*Equality-Operation for Iterator (Aufgabe 3.11 - Teil 5)
   Iterators should be the same if they refer to the same node*/
   bool operator==(ListIterator<T> const& x) const {
@@ -107,7 +105,7 @@ struct ListIterator {
   }
 
   //Inequality-Operation for Iterator (Aufgabe 3.11 - Teil 6)
-  /* ... */
+  /* returns false if iterators refer to the same node */
   bool operator!=(ListIterator<T> const& x) const {
     if(operator==(x)){
       return false;
@@ -151,7 +149,6 @@ class List {
     using const_reference = T const&;
     using iterator        = ListIterator<T>;
 
-    // not fully implemented yet
 
     /* Default-Konstuktor */
     List():
@@ -168,10 +165,16 @@ class List {
         rhs.size_ = 0;
         rhs.first_ = nullptr; // rhs leeren
         rhs.last_ = nullptr;
+        moveAufrufe++;
       }
+    
+    int showMoveAufrufe() const{
+      return moveAufrufe;
+    }
 
     //TODO: Initializer-List Konstruktor (3.14 - Teil 1)
-    /* ... */
+    /* @param Objekt vom Typ std::initializer_list<T> 
+    Inhalte der initializer List werden in die neu konstruierte Liste einfügt*/
     List(std::initializer_list<T> ini_list):
       size_{0},
       first_{nullptr},
@@ -249,21 +252,22 @@ class List {
       clear(); 
     }
 
-    //begin-Method returning an Iterator to the first element in the List (Aufgabe 3.10)
-    /* ... */
-    ListIterator<T> begin() const{
+    //begin-Method  (Aufgabe 3.10)
+    /* returns an Iterator to the first element in the List */
+    ListIterator<T> begin(){
       return ListIterator<T>{first_};
     }
 
-    /* ... */
-    ListIterator<T> end() const{
-      //TODO: end-Method returning an Iterator to element after (!) 
-      //      the last element in the List (Aufgabe 3.10)
+    /* returns an Iterator to the element after the last element in the List, therefore a nullptr */
+    ListIterator<T> end(){
       return ListIterator<T>{nullptr};
     }
 
 
-    /* ... */
+    /* inserts value before pos
+    @param 	iterator before which the content will be inserted (can also be the end() iterator)
+    @param 	element value to insert
+    @return iterator to the inserted element */
     //TODO: member function insert (Aufgabe 3.12)
     ListIterator<T> insert(ListIterator<T> const& pos, T const& element){
       
@@ -445,7 +449,7 @@ class List {
     };
 
 
-    /* returns the size of the list */
+    /* returns the size of the list (how many elements there are stored in the list) */
     std::size_t size() const{ //std::size_t is the unsigned integer type of the result of the sizeof operator    
       return size_;
     };
@@ -463,9 +467,12 @@ class List {
     std::size_t size_;
     ListNode<T>* first_;
     ListNode<T>* last_;
+    int moveAufrufe = 0;
 };
 
-/* Reverses the order of the elements of a list - ListNodeListe als Argument bekommt und eine neue Liste mit umgekehrter Reihenfolge zurückgibt */
+/* Reverses the order of the elements of a list 
+@param ListNode-Liste 
+@return new List in reversed order */
 //(Aufgabe 3.7 - Teil 2, benutzt Member-Funktion reverse)
 template <typename T>
 List<T> reverse(List<T> rhs){
@@ -474,11 +481,16 @@ List<T> reverse(List<T> rhs){
   return reverselist;
 }
 
-/* ... */
+/* Zwei Listen des selben Typs werden zu einer einzigen zusammengefuegt, sodass die Reihenfolge der Elemente
+gleich bleibt (erst Elemente der ersten Liste, dann Elemente der zweiten). Die übergebenen Listen sind
+anschließend leer (Nutzung des Move-Konstruktors)*/
 //Freie Funktion operator+ (3.14 - Teil 2)
 template <typename T>
-List<T> operator+(List<T> const& first, List<T> const& second){
-  List<T> connected{first};
+List<T> operator+(List<T>& first, List<T>& second){
+  List<int> connected = std::move(first);
+  //List<int> connected{first}; 
+  /* Implementation ohne Move-Konstruktor, dann könnten Listen const uebergeben werden und wuerden nicht
+  geleert werden*/
   for (T element: second){ 
     connected.push_back(element);
   }
