@@ -172,10 +172,13 @@ class List {
 
     //TODO: Initializer-List Konstruktor (3.14 - Teil 1)
     /* ... */
-    // test and implement:
-    List(std::initializer_list<T> ini_list) {
-      //not implemented yet
-    }
+    List(std::initializer_list<T> ini_list):
+      size_{0},
+      first_{nullptr},
+      last_{nullptr} {
+      for (T element: ini_list) 
+        push_back(element);
+      }
 
   
     //Copy-Konstruktor using Deep-Copy semantics (Aufgabe 3.5)
@@ -248,12 +251,12 @@ class List {
 
     //begin-Method returning an Iterator to the first element in the List (Aufgabe 3.10)
     /* ... */
-    ListIterator<T> begin() {
+    ListIterator<T> begin() const{
       return ListIterator<T>{first_};
     }
 
     /* ... */
-    ListIterator<T> end() {
+    ListIterator<T> end() const{
       //TODO: end-Method returning an Iterator to element after (!) 
       //      the last element in the List (Aufgabe 3.10)
       return ListIterator<T>{nullptr};
@@ -301,7 +304,6 @@ class List {
       if(pos.node == nullptr){
         throw "Iterator to the element to remove is a nullpointer.";
       }
-
       else if(pos == begin()){ 
         pop_front();
         return begin();
@@ -473,6 +475,16 @@ List<T> reverse(List<T> rhs){
 }
 
 /* ... */
-//TODO: Freie Funktion operator+ (3.14 - Teil 2)
+//Freie Funktion operator+ (3.14 - Teil 2)
+template <typename T>
+List<T> operator+(List<T> const& first, List<T> const& second){
+  List<T> connected{first};
+  for (T element: second){ 
+    connected.push_back(element);
+  }
+  return connected;
+}
+
+
 
 #endif // # define BUW_LIST_HPP

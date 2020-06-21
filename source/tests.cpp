@@ -66,6 +66,12 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 #include "sub_tests/insert.test"
 #include "sub_tests/erase.test"
 
+//insert test for initializer list constructor
+#include "sub_tests/initializer-list.test"
+
+//insert test for operator plus
+#include "sub_tests/operator_plus.test"
+
 
 int main(int argc, char *argv[])
 {

@@ -1,0 +1,28 @@
+TEST_CASE("connecting to lists to a third", "[operator_plus]") {
+  List<int> list{};
+  list.push_front(1);
+  list.push_back(2);
+
+  List<int> list2{};
+  list2.push_front(3);
+  list2.push_back(4);
+
+  List<int> list3 = operator+(list, list2);
+  REQUIRE(list3.front() == 1);
+  REQUIRE(list3.back() == 4);
+  REQUIRE(list3.size() == 4);
+
+  List<int> list4{};
+  list4.push_front(2);
+  list4.push_back(4);
+
+  List<int> list5{};
+  list5.push_front(6);
+  list5.push_back(1);
+
+  List<int> list6 = operator+(list4, list5);
+  REQUIRE(list6.front() == 2);
+  REQUIRE(list6.back() == 1);
+  REQUIRE(list6.size() == 4);
+
+}
