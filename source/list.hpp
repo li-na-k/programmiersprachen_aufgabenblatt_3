@@ -475,9 +475,9 @@ class List {
 @return new List in reversed order */
 //(Aufgabe 3.7 - Teil 2, benutzt Member-Funktion reverse)
 template <typename T>
-List<T> reverse(List<T> rhs){
-  rhs.reverse();
-  List<T> reverselist = rhs;
+List<T> reverse(List<T> const& l){ 
+  List<T> reverselist = l;
+  reverselist.reverse();
   return reverselist;
 }
 

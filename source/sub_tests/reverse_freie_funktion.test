@@ -51,4 +51,10 @@ TEST_CASE("bekommt Liste als Argument und gibt neue Liste mit umgekehrter Reihen
     REQUIRE(list8.size() == 5);
     REQUIRE(list8.front() == 13);
     REQUIRE(list8.back() == 76);
+
+    //Test 5 - empty list
+    List<int> list9{};
+    List<int> list10 = reverse(list9);
+    REQUIRE(list9.size() == 0);
+    REQUIRE(list9.size() == 0);
 }
