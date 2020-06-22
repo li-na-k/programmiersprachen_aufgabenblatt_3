@@ -1,0 +1,15 @@
+TEST_CASE("move constructor Aufrufe mit operator+", "[move constructor Aufrufe mit operator+]") {
+    
+    List<int> list1{1, 2, 3, 4, 5};
+    List<int> list2{6, 7, 8, 9};
+    auto l = list1 + list2;
+
+     /*Die Liste l wird aus dem Rückgabewert von operator+ move-konstruiert, die Inhalte von r werden von
+    l übernommen*/
+
+    /* REQUIRE(1 == l.show_move_aufrufe()); 
+    Funktioniert nicht weil hier (fälschlicherweise) der Copy-Konstruktor aufgerufen wird)*/
+
+
+   
+}

@@ -165,11 +165,11 @@ class List {
         rhs.size_ = 0;
         rhs.first_ = nullptr; // rhs leeren
         rhs.last_ = nullptr;
-        moveAufrufe++;
+        move_aufrufe++;
       }
     
-    int showMoveAufrufe() const{
-      return moveAufrufe;
+    int show_move_aufrufe() const{
+      return move_aufrufe;
     }
 
     //TODO: Initializer-List Konstruktor (3.14 - Teil 1)
@@ -199,7 +199,7 @@ class List {
 
     //(unifying) Assignment operator (Aufgabe 3.6)
     /* Ersetzt den Inhalt der Liste mit einer Kopie der Inhalte der uebergebenen Liste. */
-    List<T>& operator=(List<T> rhs) { // per-value Uebergabe, copy constructor aufgerufen
+    List<T>& operator=(List<T> rhs) { // per-value Uebergabe, copy constructor aufgerufen (move constructor, falls temporäres Objekt)
       swap(rhs);
       return *this;
     } //Destruktor fuer rhs-Kopie aufgerufen
@@ -467,7 +467,7 @@ class List {
     std::size_t size_;
     ListNode<T>* first_;
     ListNode<T>* last_;
-    int moveAufrufe = 0;
+    int move_aufrufe = 0;
 };
 
 /* Reverses the order of the elements of a list 
@@ -482,21 +482,16 @@ List<T> reverse(List<T> const& l){
 }
 
 /* Zwei Listen des selben Typs werden zu einer einzigen zusammengefuegt, sodass die Reihenfolge der Elemente
-gleich bleibt (erst Elemente der ersten Liste, dann Elemente der zweiten). Die übergebenen Listen sind
-anschließend leer (Nutzung des Move-Konstruktors)*/
+gleich bleibt (erst Elemente der ersten Liste, dann Elemente der zweiten).*/
 //Freie Funktion operator+ (3.14 - Teil 2)
 template <typename T>
-List<T> operator+(List<T>& first, List<T>& second){
-  List<int> connected = std::move(first);
-  //List<int> connected{first}; 
-  /* Implementation ohne Move-Konstruktor, dann könnten Listen const uebergeben werden und wuerden nicht
-  geleert werden*/
-  for (T element: second){ 
-    connected.push_back(element);
+List<T> operator+(List<T>& first, List<T>& second){ //keine const-Parameteruebergabe wegen begin() und end()
+  List<int> r{first};
+  for (T& element: second){ 
+    r.push_back(element);
   }
-  return connected;
+  return r;
 }
-
 
 
 #endif // # define BUW_LIST_HPP
